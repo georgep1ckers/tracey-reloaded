@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stock-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stock-controller
+  template:
+    metadata:
+      labels:
+        app: stock-controller
+    spec:
+      containers:
+      - name: stock-controller
+        image: gpickers/stock-controller
+        ports:
+        - containerPort: 8081
