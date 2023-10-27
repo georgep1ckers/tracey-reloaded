@@ -1,5 +1,15 @@
 FROM python:3.9
 
+# Set metadata labels for best practices
+LABEL authors="George Pickers,George Boddey"
+LABEL org.label-schema.vendor="Coralogix"
+LABEL org.label-schema.name="Tracey Reloaded - Order Processor"
+LABEL org.label-schema.description="Order Processor for Tracey Reloaded"
+LABEL org.label-schema.version="1.0"
+LABEL org.label-schema.url="https://github.com/georgep1ckers/tracey-reloaded"
+LABEL org.label-schema.vcs-url="https://github.com/georgep1ckers/tracey-reloaded"
+LABEL org.label-schema.schema-version="1.0"
+
 WORKDIR /app
 
 COPY . .
