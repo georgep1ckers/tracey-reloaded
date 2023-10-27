@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - gh_actions
+      - gh-actions
   workflow_dispatch:
 
 jobs:
