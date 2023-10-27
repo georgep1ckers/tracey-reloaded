@@ -36,7 +36,7 @@ jobs:
         uses: docker/build-push-action@v5.0.0
         with:
           context: ./tracey-reloaded/${{ matrix.image-folder }}
-          tags: ${{ github.repository_owner }}/${{ github.event.repository.name }}-${{ matrix.image-folder }}:latest
+          tags: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-${{ matrix.image-folder }}:latest
           labels: ${{ steps.meta.outputs.labels}}
           push: true
 
