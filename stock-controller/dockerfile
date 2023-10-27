@@ -1,5 +1,10 @@
 # Use an official Python runtime as the base image
 FROM python:3.9
+# Set metadata labels for best practices
+LABEL authors="George Pickers,George Boddey"
+LABEL org.opencontainers.image.name="Tracey Reloaded - Stock Controller"
+LABEL org.opencontainers.image.description="Stock Controller for Tracey Reloaded"
+LABEL org.opencontainers.image.source="https://github.com/georgep1ckers/tracey-reloaded"
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -9,7 +14,7 @@ COPY . .
 
 # Install the required packages
 RUN pip install flask \
-                psycopg2 \
+                psycopg2-binary \
                 opentelemetry-api \
                 opentelemetry-sdk \
                 opentelemetry-exporter-otlp \

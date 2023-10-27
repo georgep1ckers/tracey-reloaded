@@ -1,5 +1,11 @@
 FROM python:3.9
 
+# Set metadata labels for best practices
+LABEL authors="George Pickers,George Boddey"
+LABEL org.opencontainers.image.name="Tracey Reloaded - Order Processor"
+LABEL org.opencontainers.image.description="Order Processor for Tracey Reloaded"
+LABEL org.opencontainers.image.source="https://github.com/georgep1ckers/tracey-reloaded"
+
 WORKDIR /app
 
 COPY . .
@@ -9,7 +15,7 @@ RUN pip install flask \
                 opentelemetry-sdk \
                 opentelemetry-exporter-otlp \
                 opentelemetry-instrumentation-flask \
-                psycopg2 \
+                psycopg2-binary \
                 opentelemetry-instrumentation-psycopg2
 
 CMD ["python", "order-processor.py"]
