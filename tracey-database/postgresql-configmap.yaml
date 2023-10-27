@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgresql-init
+data:
+  init.sql: |
+    CREATE TABLE orders (
+        order_id SERIAL PRIMARY KEY,
+        cupboards INTEGER DEFAULT 0,
+        computers INTEGER DEFAULT 0,
+        chairs INTEGER DEFAULT 0,
+        desks INTEGER DEFAULT 0,
+        is_processed BOOLEAN DEFAULT FALSE
+    );
+
+    INSERT INTO orders (cupboards, computers, chairs, desks) VALUES (1, 5, 5, 4);
+
+    CREATE TABLE stock (
+        product_id SERIAL PRIMARY KEY,
+        product VARCHAR(255) UNIQUE,
+        stock_quantity INTEGER
+    );
+
+    INSERT INTO stock (product, stock_quantity) VALUES ('cupboards', 200);  
+    INSERT INTO stock (product, stock_quantity) VALUES ('computers', 100);  
+    INSERT INTO stock (product, stock_quantity) VALUES ('chairs', 200);     
+    INSERT INTO stock (product, stock_quantity) VALUES ('desks', 100);  
