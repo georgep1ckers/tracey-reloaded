@@ -290,5 +290,5 @@ if __name__ == "__main__":
             else:
                 custom_logger("No more orders to pick up",level='info')
             
-            # Wait for 10 seconds before the next iteration
-            time.sleep(10)
+        # Wait for 10 seconds before the next iteration
+        time.sleep(10)
