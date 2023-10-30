@@ -14,4 +14,4 @@ spec:
     spec:
       containers:
       - name: warehouse-interface
-        image: gpickers/warehouse-interface
+        image: ghcr.io/georgep1ckers/tracey-reloaded-warehouse-interface:latest
