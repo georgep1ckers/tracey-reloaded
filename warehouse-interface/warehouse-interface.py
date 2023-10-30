@@ -122,11 +122,11 @@ def delete_order_from_order_processor(order_id):
         custom_logger(f"Attempting to delete order with ID: {order_id}",level='info')
         
         # Add additional span for HTTP response status
-        with tracer.start_as_current_span("HTTP Response"):
-            http_status_code = response.status_code
-            current_span = get_current_span()
-            current_span.set_attribute("http.status_code", http_status_code)
-            current_span.set_status(set_http_status(http_status_code))
+#        with tracer.start_as_current_span("HTTP Response"):
+#            http_status_code = response.status_code
+#            current_span = get_current_span()
+#            current_span.set_attribute("http.status_code", http_status_code)
+#            current_span.set_status(set_http_status(http_status_code))
 
         if response.status_code != 200:
             custom_logger(f"Failed to delete order with ID: {order_id}",level='error')
@@ -140,11 +140,11 @@ def get_order_from_order_processor():
         custom_logger(f"Getting orders from Processor",level='info')
 
         # Add additional span for HTTP response status
-        with tracer.start_as_current_span("HTTP Response"):
-            http_status_code = response.status_code
-            current_span = get_current_span()
-            current_span.set_attribute("http.status_code", http_status_code)
-            current_span.set_status(set_http_status(http_status_code))
+#        with tracer.start_as_current_span("HTTP Response"):
+#            http_status_code = response.status_code
+#            current_span = get_current_span()
+#            current_span.set_attribute("http.status_code", http_status_code)
+#            current_span.set_status(set_http_status(http_status_code))
 
         # Check the content type of the response
         content_type = response.headers.get('Content-Type')
@@ -161,11 +161,11 @@ def add_order_to_order_processor(order_data):
         
         response = requests.post(url, json=order_data)
 
-        with tracer.start_as_current_span("HTTP Response"):
-            http_status_code = response.status_code
-            current_span = get_current_span()
-            current_span.set_attribute("http.status_code", http_status_code)
-            current_span.set_status(set_http_status(http_status_code))
+#        with tracer.start_as_current_span("HTTP Response"):
+#            http_status_code = response.status_code
+#            current_span = get_current_span()
+#            current_span.set_attribute("http.status_code", http_status_code)
+#            current_span.set_status(set_http_status(http_status_code))
 
         if response.status_code == 201:
             custom_logger(f"Order was added.",level='info')
@@ -189,11 +189,11 @@ def check_stock_from_stock_processor(product):
         response = requests.get(url)
         custom_logger(f"Checking stock for product {product}.",level='info')
         
-        with tracer.start_as_current_span("HTTP Response"):
-            http_status_code = response.status_code
-            current_span = get_current_span()
-            current_span.set_attribute("http.status_code", http_status_code)
-            current_span.set_status(set_http_status(http_status_code))
+#        with tracer.start_as_current_span("HTTP Response"):
+#            http_status_code = response.status_code
+#            current_span = get_current_span()
+#            current_span.set_attribute("http.status_code", http_status_code)
+#            current_span.set_status(set_http_status(http_status_code))
 
         if response.status_code != 200:
             custom_logger(f"Failed to check stock for {product}.",level='error')
@@ -212,11 +212,11 @@ def increase_stock_from_stock_processor(product, quantity):
         custom_logger(f"Attempting to increase stock for {product} by {quantity}",level='info')
 
         
-        with tracer.start_as_current_span("HTTP Response"):
-            http_status_code = response.status_code
-            current_span = get_current_span()
-            current_span.set_attribute("http.status_code", http_status_code)
-            current_span.set_status(set_http_status(http_status_code))
+#        with tracer.start_as_current_span("HTTP Response"):
+#            http_status_code = response.status_code
+#            current_span = get_current_span()
+#            current_span.set_attribute("http.status_code", http_status_code)
+#            current_span.set_status(set_http_status(http_status_code))
 
         if response.status_code != 200:
             custom_logger(f"Failed to increase stock for {product}",level='error')
@@ -234,11 +234,11 @@ def decrease_stock_from_stock_processor(product, quantity):
         response = requests.post(url, json=data)
         custom_logger(f"Attempting to decrease stock for {product} by {quantity}",level='info')
         
-        with tracer.start_as_current_span("HTTP Response"):
-            http_status_code = response.status_code
-            current_span = get_current_span()
-            current_span.set_attribute("http.status_code", http_status_code)
-            current_span.set_status(set_http_status(http_status_code))
+#        with tracer.start_as_current_span("HTTP Response"):
+#            http_status_code = response.status_code
+#            current_span = get_current_span()
+#            current_span.set_attribute("http.status_code", http_status_code)
+#            current_span.set_status(set_http_status(http_status_code))
 
         if response.status_code != 200:
             custom_logger(f"Failed to decrease stock for {product}",level='error')
