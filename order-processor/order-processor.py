@@ -28,7 +28,7 @@ def custom_logger(message, level='info'):
         trace_id_hex = span_id_hex = 'N/A'
 
     log_message = f"[TraceID: {trace_id_hex}, SpanID: {span_id_hex}] {message}"
-    
+
     if level == 'info':
         logging.info(log_message)
     elif level == 'error':
@@ -75,7 +75,7 @@ app = Flask(__name__)
 FlaskInstrumentor().instrument_app(app)
 
 # Instrument psycopg2
-Psycopg2Instrumentor().instrument()
+Psycopg2Instrumentor().instrument(skip_dep_check=True, enable_commenter=True)
 
 # Database parameters:
 db_params = {

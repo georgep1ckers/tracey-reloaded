@@ -30,7 +30,7 @@ def custom_logger(message, level='info'):
         trace_id_hex = span_id_hex = 'N/A'
 
     log_message = f"[TraceID: {trace_id_hex}, SpanID: {span_id_hex}] {message}"
-    
+
     if level == 'info':
         logging.info(log_message)
     elif level == 'error':
@@ -87,7 +87,7 @@ db_params = {
 }
 
 # Instrument psycopg2
-Psycopg2Instrumentor().instrument()
+Psycopg2Instrumentor().instrument(skip_dep_check=True, enable_commenter=True)
 
 # Set up a database connection pool
 pool = SimpleConnectionPool(
@@ -141,7 +141,7 @@ def decrease_stock():
                     conn.commit()
                     custom_logger(f"Decreased stock for product: {product} by {quantity}.")
                     return jsonify({"message": "Stock decreased successfully"})
-                
+
 if __name__ == "__main__":
     app.logger.info('Stock Controller is starting...')
     app.run(host="0.0.0.0", port=8081)
