@@ -247,47 +247,48 @@ def decrease_stock_from_stock_processor(product, quantity):
 
 if __name__ == "__main__":
     while True:
-        # Generate a random order
-        order = generate_random_order()
-        
-        # Add each product and its quantity to the order-processor
-        add_order_to_order_processor(order)
+        with tracer.start_as_current_span("Warehouse Interface: Processing Interation", kind=trace.SpanKind.CLIENT):
+            # Generate a random order
+            order = generate_random_order()
+            
+            # Add each product and its quantity to the order-processor
+            add_order_to_order_processor(order)
 
-        # Retrieve an unprocessed order
-        response = get_order_from_order_processor()
+            # Retrieve an unprocessed order
+            response = get_order_from_order_processor()
 
-        if response:
-            if isinstance(response, list):
-                # Assuming the first element contains what you need; adjust if needed
-                first_order = response[0] if response else None
-                order_id = first_order.get('order_id', None) if first_order else None
-            elif isinstance(response, dict):
-                order_id = response.get('order_id', None)
+            if response:
+                if isinstance(response, list):
+                    # Assuming the first element contains what you need; adjust if needed
+                    first_order = response[0] if response else None
+                    order_id = first_order.get('order_id', None) if first_order else None
+                elif isinstance(response, dict):
+                    order_id = response.get('order_id', None)
+                else:
+                    custom_logger("Unknown response type",level='error')
+                    order_id = None
+
+                if order_id:
+                    # Decrease stock after retrieving order
+                    for product, quantity in order.items():
+                        stock_response = decrease_stock_from_stock_processor(product, quantity)
+                        if stock_response and 'error' in stock_response:
+                            logging.error(f"Failed to decrease stock for {product}")
+                        else:
+                            # Check current stock quantity after decrease
+                            current_stock = check_stock_from_stock_processor(product)
+                            if current_stock and current_stock['quantity'] < 100:
+                                increase_stock_from_stock_processor(product, 100)
+                            logging.info(f"Picked up order: {order_id} - {product} (Quantity: {quantity})")
+
+                    # Delete the order if it is processed
+                    delete_order_response = delete_order_from_order_processor(order_id)
+                    if delete_order_response:
+                        custom_logger("Deleted processed order with ID: {order_id}",level='info')
+                else:
+                    custom_logger("No order_id found in the response",level='error')
             else:
-                custom_logger("Unknown response type",level='error')
-                order_id = None
-
-            if order_id:
-                # Decrease stock after retrieving order
-                for product, quantity in order.items():
-                    stock_response = decrease_stock_from_stock_processor(product, quantity)
-                    if stock_response and 'error' in stock_response:
-                        logging.error(f"Failed to decrease stock for {product}")
-                    else:
-                        # Check current stock quantity after decrease
-                        current_stock = check_stock_from_stock_processor(product)
-                        if current_stock and current_stock['quantity'] < 100:
-                            increase_stock_from_stock_processor(product, 100)
-                        logging.info(f"Picked up order: {order_id} - {product} (Quantity: {quantity})")
-
-                # Delete the order if it is processed
-                delete_order_response = delete_order_from_order_processor(order_id)
-                if delete_order_response:
-                    custom_logger("Deleted processed order with ID: {order_id}",level='info')
-            else:
-                custom_logger("No order_id found in the response",level='error')
-        else:
-            custom_logger("No more orders to pick up",level='info')
-        
-        # Wait for 10 seconds before the next iteration
-        time.sleep(10)
+                custom_logger("No more orders to pick up",level='info')
+            
+            # Wait for 10 seconds before the next iteration
+            time.sleep(10)
