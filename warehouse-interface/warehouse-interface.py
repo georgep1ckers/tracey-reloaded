@@ -115,7 +115,7 @@ def generate_random_order():
 
 def delete_order_from_order_processor(order_id):
     """Delete a processed order from the order-processor service."""
-    with tracer.start_as_current_span("WarehouseInterface: Delete Order from Processor", kind=trace.SpanKind.SERVER):
+    with tracer.start_as_current_span("WarehouseInterface: Delete Order from Processor", kind=trace.SpanKind.CLIENT):
         url = f"http://order-processor:8080/deleteorders/{order_id}"
 #        headers = inject_tracer_to_request_headers({})
         response = requests.get(url)
@@ -134,7 +134,7 @@ def delete_order_from_order_processor(order_id):
         return response.json()
 
 def get_order_from_order_processor():
-    with tracer.start_as_current_span("WarehouseInterface: Get Order from Processor", kind=trace.SpanKind.SERVER):
+    with tracer.start_as_current_span("WarehouseInterface: Get Order from Processor", kind=trace.SpanKind.CLIENT):
         url = "http://order-processor:8080/checkorders"
         response = requests.get(url)
         custom_logger(f"Getting orders from Processor",level='info')
@@ -156,7 +156,7 @@ def get_order_from_order_processor():
 
 
 def add_order_to_order_processor(order_data):
-    with tracer.start_as_current_span("WarehouseInterface: Add Order to Processor", kind=trace.SpanKind.SERVER):
+    with tracer.start_as_current_span("WarehouseInterface: Add Order to Processor", kind=trace.SpanKind.CLIENT):
         url = "http://order-processor:8080/addorders"
         
         response = requests.post(url, json=order_data)
@@ -183,7 +183,7 @@ def add_order_to_order_processor(order_data):
 
 
 def check_stock_from_stock_processor(product):
-    with tracer.start_as_current_span("WarehouseInterface: Check Stock from stock-controller", kind=trace.SpanKind.SERVER):
+    with tracer.start_as_current_span("WarehouseInterface: Check Stock from stock-controller", kind=trace.SpanKind.CLIENT):
         url = f"http://stock-controller:8081/checkstock?product={product}"
   #      headers = inject_tracer_to_request_headers({})
         response = requests.get(url)
@@ -201,7 +201,7 @@ def check_stock_from_stock_processor(product):
         return response.json()
 
 def increase_stock_from_stock_processor(product, quantity):
-    with tracer.start_as_current_span("WarehouseInterface: Increase Stock from stock-controller", kind=trace.SpanKind.SERVER):
+    with tracer.start_as_current_span("WarehouseInterface: Increase Stock from stock-controller", kind=trace.SpanKind.CLIENT):
         url = "http://stock-controller:8081/increasestock"
         data = {
             'product': product,
@@ -224,7 +224,7 @@ def increase_stock_from_stock_processor(product, quantity):
         return response.json()
 
 def decrease_stock_from_stock_processor(product, quantity):
-    with tracer.start_as_current_span("WarehouseInterface: Decrease Stock from stock-controller", kind=trace.SpanKind.SERVER):
+    with tracer.start_as_current_span("WarehouseInterface: Decrease Stock from stock-controller", kind=trace.SpanKind.CLIENT):
         url = "http://stock-controller:8081/decreasestock"
         data = {
             'product': product,
