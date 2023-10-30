@@ -15,3 +15,11 @@ spec:
       containers:
       - name: warehouse-interface
         image: ghcr.io/georgep1ckers/tracey-reloaded-warehouse-interface:latest
+        env:
+          - name: KUBE_NODE_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          - name: OTEL_HOST
+            value: "$(KUBE_NODE_NAME):4317"
