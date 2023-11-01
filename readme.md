@@ -13,38 +13,32 @@ Tracey Reloaded is a dummy Kubernetes-based application designed to generate log
 - Kubernetes cluster up and running.
 - `kubectl` command-line tool installed and configured to communicate with your cluster.
 
+## Clone Git Repository
+
+   Run the following command:
+   ```
+   git clone https://github.com/georgep1ckers/tracey-reloaded.git
+   ```
+
+
 ## Deployment
 
-1. **Start the PostgreSQL Database**
+1. **Start the PostgreSQL Database and Deploy the Services**
 
    Execute the following script:
    ```
-   ./database-run.sh
-   ```
-
-2. **Deploy the Services**
-
-   Execute the following script:
-   ```
-   ./tracey-run.sh
+   ./run-tracey.sh
    ```
 
 ## Deletion
 
 If you wish to remove the services and the database from your Kubernetes cluster:
 
-1. **Delete the Services**
+1. **Stop & Delete the Services and the PostgreSQL Database**
 
    Execute the following script:
    ```
-   ./tracey-delete.sh
-   ```
-
-2. **Delete the PostgreSQL Database**
-
-   Execute the following script:
-   ```
-   ./database-delete.sh
+   ./tracey-stop.sh
    ```
 
 ## Contributing
