@@ -38,7 +38,7 @@ If you wish to remove the services and the database from your Kubernetes cluster
 
    Execute the following script:
    ```
-   ./tracey-stop.sh
+   ./stop-tracey.sh
    ```
 
 ## Contributing
