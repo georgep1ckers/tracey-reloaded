@@ -25,3 +25,15 @@ spec:
                 fieldPath: spec.nodeName
           - name: OTEL_HOST
             value: "$(KUBE_NODE_NAME):4317"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-processor
+spec:
+  selector:
+    app: order-processor
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
