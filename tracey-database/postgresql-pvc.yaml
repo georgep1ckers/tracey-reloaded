@@ -5,6 +5,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
+  storageClassName: gp2  # Ensure this matches your available StorageClass
   resources:
     requests:
       storage: 1Gi
